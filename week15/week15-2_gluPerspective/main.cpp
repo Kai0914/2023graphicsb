@@ -33,7 +33,8 @@ static void resize(int width, int height)
     glMatrixMode(GL_PROJECTION);///切換成投影矩陣
     glLoadIdentity();
     ///glFrustum(-ar, ar, -1.0, 1.0, 2.0, 100.0);
-    glOrtho(-ar, ar, -1.0, 1.0, 2.0, 100.0);
+    ///glOrtho(-ar, ar, -1.0, 1.0, 2.0, 100.0);
+    gluPerspective(60,ar,0.01,1000);
     glMatrixMode(GL_MODELVIEW);///切換成 model view 矩陣
     glLoadIdentity() ;///設成單位矩陣
 }
