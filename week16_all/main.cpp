@@ -14,9 +14,35 @@ GLMmodel * foot1 = NULL, * foot2 = NULL;
 
 float teapotX = 0, teapotY = 0, oldX = 0, oldY = 0;
 float angle[20] = {}, angle2[20] = {};///float angle = 0, angle2 = 0;
+float NewAngle[20] = {}, NewAngle2[20] = {};
+float OldAngle[20] = {}, OldAngle2[20] = {};
 int ID = 0;
 FILE * fout = NULL;
 FILE * fin = NULL;
+
+void timer(int t) {
+    printf("現在timer(%d)\n", t);
+    glutTimerFunc(20, timer, t+1); ///馬上設定下一個鬧鐘
+
+    float alpha = (t%50) / 50.0; ///0.0 ~ 1.0
+
+    if(t%50==0){
+        if(fin == NULL) fin = fopen("motion.txt", "r");
+        for(int i=0; i<20; i++){
+            OldAngle[i] = NewAngle[i];
+            OldAngle2[i] = NewAngle2[i];
+            fscanf(fin, "%f", &NewAngle[i] );
+            fscanf(fin, "%f", &NewAngle2[i] );
+        }
+    }
+    for(int i=0; i<20; i++){
+        angle[i] = NewAngle[i] * alpha + OldAngle[i] * (1-alpha);
+        angle2[i] = NewAngle2[i] * alpha + OldAngle2[i] * (1-alpha);
+    }
+
+    glutPostRedisplay();
+}
+
 void keyboard(unsigned char key, int x, int y) {
     if(key=='0') ID = 0;
     if(key=='1') ID = 1;
@@ -28,7 +54,7 @@ void keyboard(unsigned char key, int x, int y) {
     if(key=='7') ID = 7;
     if(key=='8') ID = 8;
     if(key=='9') ID = 9;
-    if(key=='s'){ ///save存檔
+    if(key=='s'){ ///save存檔 也會動到檔案
         if(fout == NULL) fout = fopen("motion.txt", "w");
         for(int i=0; i<20; i++){
             fprintf(fout, "%.2f ", angle[i] );
@@ -37,13 +63,16 @@ void keyboard(unsigned char key, int x, int y) {
         fprintf(fout, "\n");
         printf("寫了一行\n");
     }
-    if(key=='r'){ ///read讀檔
+    if(key=='r'){ ///read讀檔 也會動到檔案
         if(fin == NULL) fin = fopen("motion.txt", "r");
         for(int i=0; i<20; i++){
             fscanf(fin, "%f", &angle[i] );
             fscanf(fin, "%f", &angle2[i] );
         }
         glutPostRedisplay();
+    }
+    if(key=='p'){ ///play播放 也會動到檔案
+        glutTimerFunc(0, timer, 0);
     }
 }
 
@@ -113,7 +142,7 @@ void display() {
 
                 glPushMatrix();
                     glTranslatef(+4.40, +18.53, 0 );
-                    glRotatef(angle[5], 0, 1, 0);
+                    glRotatef(angle[4], 0, 1, 0);
                     glRotatef(angle2[4], 1, 0, 0);
                     glTranslatef(-4.40, -18.53, 0 );///glTranslatef(teapotX, teapotY, 0);
                     glmDraw(hand2, GLM_MATERIAL|GLM_TEXTURE);
