@@ -1,4 +1,4 @@
-#include <opencv/highgui.h> ///®œ•Œ OpenCV 2.1 §Ò∏˚¬≤≥Ê, •u≠n•Œ High GUI ßY•i
+#include <opencv/highgui.h> ///‰ΩøÁî® OpenCV 2.1 ÊØîËºÉÁ∞°ÂñÆ, Âè™Ë¶ÅÁî® High GUI Âç≥ÂèØ
 #include <opencv/cv.h>
 #include <stdio.h>
 #include <GL/glut.h>
@@ -14,35 +14,9 @@ GLMmodel * foot1 = NULL, * foot2 = NULL;
 
 float teapotX = 0, teapotY = 0, oldX = 0, oldY = 0;
 float angle[20] = {}, angle2[20] = {};///float angle = 0, angle2 = 0;
-float NewAngle[20] = {}, NewAngle2[20] = {};
-float OldAngle[20] = {}, OldAngle2[20] = {};
 int ID = 0;
 FILE * fout = NULL;
 FILE * fin = NULL;
-
-void timer(int t) {
-    printf("≤{¶btimer(%d)\n", t);
-    glutTimerFunc(20, timer, t+1); ///∞®§W≥]©w§U§@≠”æxƒ¡
-
-    float alpha = (t%50) / 50.0; ///0.0 ~ 1.0
-
-    if(t%50==0){
-        if(fin == NULL) fin = fopen("motion.txt", "r");
-        for(int i=0; i<20; i++){
-            OldAngle[i] = NewAngle[i];
-            OldAngle2[i] = NewAngle2[i];
-            fscanf(fin, "%f", &NewAngle[i] );
-            fscanf(fin, "%f", &NewAngle2[i] );
-        }
-    }
-    for(int i=0; i<20; i++){
-        angle[i] = NewAngle[i] * alpha + OldAngle[i] * (1-alpha);
-        angle2[i] = NewAngle2[i] * alpha + OldAngle2[i] * (1-alpha);
-    }
-
-    glutPostRedisplay();
-}
-
 void keyboard(unsigned char key, int x, int y) {
     if(key=='0') ID = 0;
     if(key=='1') ID = 1;
@@ -54,16 +28,16 @@ void keyboard(unsigned char key, int x, int y) {
     if(key=='7') ID = 7;
     if(key=='8') ID = 8;
     if(key=='9') ID = 9;
-    if(key=='s'){ ///save¶s¿… §]∑|∞ ®Ï¿…Æ◊
+    if(key=='s'){ ///saveÂ≠òÊ™î
         if(fout == NULL) fout = fopen("motion.txt", "w");
         for(int i=0; i<20; i++){
             fprintf(fout, "%.2f ", angle[i] );
             fprintf(fout, "%.2f ", angle2[i] );
         }
         fprintf(fout, "\n");
-        printf("ºg§F§@¶Ê\n");
+        printf("ÂØ´‰∫Ü‰∏ÄË°å\n");
     }
-    if(key=='r'){ ///read≈™¿… §]∑|∞ ®Ï¿…Æ◊
+    if(key=='r'){ ///readËÆÄÊ™î
         if(fin == NULL) fin = fopen("motion.txt", "r");
         for(int i=0; i<20; i++){
             fscanf(fin, "%f", &angle[i] );
@@ -71,23 +45,20 @@ void keyboard(unsigned char key, int x, int y) {
         }
         glutPostRedisplay();
     }
-    if(key=='p'){ ///playºΩ©Ò §]∑|∞ ®Ï¿…Æ◊
-        glutTimerFunc(0, timer, 0);
-    }
 }
 
 int myTexture(char * filename)
 {
-    IplImage * img = cvLoadImage(filename); ///OpenCV≈™πœ
-    cvCvtColor(img,img, CV_BGR2RGB); ///OpenCV¬‡¶‚±m (ª›≠ncv.h)
-    glEnable(GL_TEXTURE_2D); ///1. ∂}±“∂Kπœ•\Ø‡
-    GLuint id; ///∑«≥∆§@≠” unsigned int æ„º∆, •s ∂KπœID
-    glGenTextures(1, &id); /// ≤£•ÕGenerate ∂KπœID
-    glBindTexture(GL_TEXTURE_2D, id); ///∏j©wbind ∂KπœID
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); /// ∂Kπœ∞—º∆, ∂WπL•]∏À™∫ΩdπœT, ¥N≠´¬–∂Kπœ
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); /// ∂Kπœ∞—º∆, ∂WπL•]∏À™∫ΩdπœS, ¥N≠´¬–∂Kπœ
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); /// ∂Kπœ∞—º∆, ©Ò§jÆ…™∫§∫¥°, •Œ≥Ã™Ò¬I
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); /// ∂Kπœ∞—º∆, ¡Y§pÆ…™∫§∫¥°, •Œ≥Ã™Ò¬I
+    IplImage * img = cvLoadImage(filename); ///OpenCVËÆÄÂúñ
+    cvCvtColor(img,img, CV_BGR2RGB); ///OpenCVËΩâËâ≤ÂΩ© (ÈúÄË¶Åcv.h)
+    glEnable(GL_TEXTURE_2D); ///1. ÈñãÂïüË≤ºÂúñÂäüËÉΩ
+    GLuint id; ///Ê∫ñÂÇô‰∏ÄÂÄã unsigned int Êï¥Êï∏, Âè´ Ë≤ºÂúñID
+    glGenTextures(1, &id); /// Áî¢ÁîüGenerate Ë≤ºÂúñID
+    glBindTexture(GL_TEXTURE_2D, id); ///Á∂ÅÂÆöbind Ë≤ºÂúñID
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); /// Ë≤ºÂúñÂèÉÊï∏, Ë∂ÖÈÅéÂåÖË£ùÁöÑÁØÑÂúñT, Â∞±ÈáçË¶ÜË≤ºÂúñ
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); /// Ë≤ºÂúñÂèÉÊï∏, Ë∂ÖÈÅéÂåÖË£ùÁöÑÁØÑÂúñS, Â∞±ÈáçË¶ÜË≤ºÂúñ
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); /// Ë≤ºÂúñÂèÉÊï∏, ÊîæÂ§ßÊôÇÁöÑÂÖßÊèí, Áî®ÊúÄËøëÈªû
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); /// Ë≤ºÂúñÂèÉÊï∏, Á∏ÆÂ∞èÊôÇÁöÑÂÖßÊèí, Áî®ÊúÄËøëÈªû
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img->width, img->height, 0, GL_RGB, GL_UNSIGNED_BYTE, img->imageData);
     return id;
 }
@@ -109,14 +80,14 @@ void display() {
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glPushMatrix();
         glScalef(1.6, 1.6, 1.6);
-        glTranslatef(0, -0.5, 0);///©π§U§@•b
+        glTranslatef(0, -0.5, 0);///ÂæÄ‰∏ã‰∏ÄÂçä
         glPushMatrix();
             glColor3f(1,1,1);
             glScalef(0.04, 0.04, 0.04);
-            glRotatef(angle[0], 0, 1, 0); ///®≠≈È™∫¬‡∞ 
+            glRotatef(angle[0], 0, 1, 0); ///Ë∫´È´îÁöÑËΩâÂãï
             glmDraw(body, GLM_MATERIAL|GLM_TEXTURE);///glmDraw(gundam, GLM_MATERIAL|GLM_TEXTURE);
 
-            glPushMatrix();///•™§‚
+            glPushMatrix();///Â∑¶Êâã
                 glTranslatef(-4.07, +21.33, 0 );
                 glRotatef(angle[1], 0, 1, 0);
                 glRotatef(angle2[1], 1, 0, 0);
@@ -133,7 +104,7 @@ void display() {
             glPopMatrix();
 
 
-            glPushMatrix();///•k§‚
+            glPushMatrix();///Âè≥Êâã
                 glTranslatef(+4.07, +21.33, 0 );
                 glRotatef(angle[3], 0, 1, 0);
                 glRotatef(angle2[3], 1, 0, 0);
@@ -158,7 +129,7 @@ void display() {
             glPopMatrix();
 
 
-            glPushMatrix();///•™∏}
+            glPushMatrix();///Â∑¶ËÖ≥
                 glmDraw(bot, GLM_MATERIAL|GLM_TEXTURE);
 
                 glPushMatrix();
@@ -186,7 +157,7 @@ void display() {
                 glPopMatrix();
             glPopMatrix();
 
-            glPushMatrix();///•k∏}
+            glPushMatrix();///Âè≥ËÖ≥
                 glmDraw(bot, GLM_MATERIAL|GLM_TEXTURE);
 
                 glPushMatrix();

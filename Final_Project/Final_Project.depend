@@ -29,3 +29,81 @@
 1684995693 c:\users\administrator\desktop\2023graphicsb\final_project\glm.h
 	<GL/glut.h>
 
+1685623964 source:c:\users\servi\desktop\2023graphicsb\final_project\glm.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"glm.h"
+
+1685623964 c:\users\servi\desktop\2023graphicsb\final_project\glm.h
+	<GL/glut.h>
+
+1685623964 c:\users\servi\desktop\2023graphicsb\final_project\freeglut\include\gl\glut.h
+	"freeglut_std.h"
+
+1685623964 c:\users\servi\desktop\2023graphicsb\final_project\freeglut\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1686052653 source:c:\users\servi\desktop\2023graphicsb\final_project\main.cpp
+	<opencv/highgui.h>
+	<opencv/cv.h>
+	<stdio.h>
+	<GL/glut.h>
+	"glm.h"
+	<windows.h>
+	"CMP3_MCI.h"
+
+1685623965 c:\users\servi\desktop\2023graphicsb\final_project\cmp3_mci.h
+	<string>
+	<windows.h>
+	<mmsystem.h>
+
+1685623964 source:c:\users\servi\downloads\final_project\glm.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"glm.h"
+
+1685623964 c:\users\servi\downloads\final_project\glm.h
+	<GL/glut.h>
+
+1685623964 c:\users\servi\downloads\final_project\freeglut\include\gl\glut.h
+	"freeglut_std.h"
+
+1685623964 c:\users\servi\downloads\final_project\freeglut\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1685866172 source:c:\users\servi\downloads\final_project\main.cpp
+	<opencv/highgui.h>
+	<opencv/cv.h>
+	<stdio.h>
+	<GL/glut.h>
+	"glm.h"
+	<windows.h>
+	"CMP3_MCI.h"
+
+1685623965 c:\users\servi\downloads\final_project\cmp3_mci.h
+	<string>
+	<windows.h>
+	<mmsystem.h>
+
